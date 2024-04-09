@@ -1,0 +1,67 @@
+import { useState } from "react";
+import Modal from "react-bootstrap/Modal";
+import { post } from "../../utities/apiServices";
+import CustQRScanner from "../commonComp/CustQRScanner";
+
+const Attendance = (props) => {
+  const {
+    show,
+    title = "Attendance",
+    defaultCloseBtn = true,
+    size = "md",
+    setAttendanceModalShow,
+  } = props;
+  const [errorResp, setErrorResp] = useState(null);
+  const attendanceApi = async (data) => {
+    setErrorResp(null);
+    const reqData = {
+      custId: "65bfa2591398296af88dd10b",
+      deviceData: data,
+    };
+    try {
+      const res = await post(`attendance/add`, reqData);
+      onHide();
+      if (res.status === 200) {
+        const result = res.json();
+      }
+    } catch (error) {
+      if (typeof error === "object") {
+        let errorMsg = await error.json();
+        setErrorResp(errorMsg?.data);
+      }
+    }
+  };
+
+  const handleScannedResult = (data) => {
+    attendanceApi(data);
+  };
+
+  const onHide = () => {
+    setAttendanceModalShow(false);
+  };
+
+  return (
+    <Modal
+      show={show}
+      onHide={onHide}
+      size={size}
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      backdrop="static"
+      keyboard={false}
+    >
+      <Modal.Header closeButton={defaultCloseBtn}>
+        <Modal.Title id="contained-modal-title-vcenter">{title}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <CustQRScanner
+          modalClosed={show}
+          handleScannedResult={handleScannedResult}
+          errorResp={errorResp}
+        />
+      </Modal.Body>
+    </Modal>
+  );
+};
+
+export default Attendance;
