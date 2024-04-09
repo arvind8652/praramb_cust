@@ -10,11 +10,11 @@ import { BRANDNAME, LOGIN_FORM, atomNameConst } from "../utities/constants";
 function Header(props) {
   const { setModalFor, setShowModal } = props;
   const { getRecoilVal, setRecoilVal } = useSelector();
-  const loginData = getRecoilVal(atomNameConst.LOGINDETAIL);
+  const loginData = getRecoilVal(atomNameConst.CUSTOMERDETAIL);
 
   const handleLogout = () => {
     try {
-      setRecoilVal(atomNameConst.LOGINDETAIL, null);
+      setRecoilVal(atomNameConst.CUSTOMERDETAIL, null);
       setShowModal(true);
       setModalFor(LOGIN_FORM);
     } catch (error) {}
@@ -47,7 +47,7 @@ function Header(props) {
                   {loginData && (
                     <>
                       <Navbar.Text className="mx-2">
-                        {`${loginData?.name} - ${loginData?.role}`}
+                        {`${loginData?.firstName} ${loginData?.lastName}`}
                       </Navbar.Text>
                       <Nav.Link>
                         <FontAwesomeIcon

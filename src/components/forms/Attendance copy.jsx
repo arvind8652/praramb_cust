@@ -7,7 +7,7 @@ const Attendance = () => {
   const attendanceApi = async (data) => {
     setErrorResp(null);
     const reqData = {
-      custId: "65bfa2591398296af88dd10b",
+      custId: getRecoilVal(atomNameConst.CUSTOMERDETAIL)?._id,
       deviceData: data,
     };
     try {

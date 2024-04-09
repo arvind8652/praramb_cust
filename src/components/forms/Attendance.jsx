@@ -2,8 +2,11 @@ import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { post } from "../../utities/apiServices";
 import CustQRScanner from "../commonComp/CustQRScanner";
+import useSelector from "../../store/selector";
+import { atomNameConst } from "../../utities/constants";
 
 const Attendance = (props) => {
+  const { getRecoilVal, setRecoilVal } = useSelector();
   const {
     show,
     title = "Attendance",
@@ -15,7 +18,7 @@ const Attendance = (props) => {
   const attendanceApi = async (data) => {
     setErrorResp(null);
     const reqData = {
-      custId: "65bfa2591398296af88dd10b",
+      custId: getRecoilVal(atomNameConst.CUSTOMERDETAIL)?._id,
       deviceData: data,
     };
     try {

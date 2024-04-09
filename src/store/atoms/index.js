@@ -3,6 +3,12 @@ import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist({ storage: localStorage });
 
+export const customerDetail = atom({
+  key: "customerDetail",
+  default: null,
+  effects_UNSTABLE: [persistAtom],
+});
+
 export const attendance = atom({
   key: "attendance",
   default: null,

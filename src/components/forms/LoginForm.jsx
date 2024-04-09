@@ -17,8 +17,8 @@ const LoginForm = (props) => {
 
   const handlePostApiForLogin = async (data) => {
     try {
-      const resp = await post("admin/login", data);
-      setRecoilVal(atomNameConst?.LOGINDETAIL, resp?.data);
+      const resp = await post("customerDetail/login", data);
+      setRecoilVal(atomNameConst?.CUSTOMERDETAIL, resp?.data);
       setShowModal(false);
       return true;
     } catch (error) {
@@ -31,6 +31,7 @@ const LoginForm = (props) => {
     <Formik
       validationSchema={loginFormSchema}
       onSubmit={async (values, { setSubmitting }) => {
+        console.log("submit btn clicked");
         const response = await handlePostApiForLogin(values);
         response ? setSubmitting(true) : setSubmitting(false);
       }}

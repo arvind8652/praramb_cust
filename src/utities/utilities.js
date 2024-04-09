@@ -46,10 +46,8 @@ export const notificationFormSchema = yup.object().shape({
 // ------------------------start for login detail----------------------
 export const loginFormInitialData = {
   mobileNo: "",
-  password: "",
 };
 export const loginFormSchema = yup.object().shape({
   mobileNo: yup.string().required(),
-  password: yup.string().required(),
 });
 // ------------------------ end for login detail----------------------

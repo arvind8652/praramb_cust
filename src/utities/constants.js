@@ -12,9 +12,9 @@ export const LOGIN_FORM = "login_Form";
 export const ATTENDANCE = "attendance";
 
 // export const BASEURL = "http://localhost:5001/"; //it is used for mockoon api
-// export const BASEURL = "http://localhost:5000/"; // it is used for mongodb database
+export const BASEURL = "http://localhost:5000/"; // it is used for mongodb database
 // export const BASEURL = "http://192.168.0.108:5000/"; // it is used for same network 2
-export const BASEURL = "http://192.168.1.116:5000/"; // it is used for same network 1
+// export const BASEURL = "http://192.168.1.116:5000/"; // it is used for same network 1
 
 export const atomNameConst = {
   NOTIFICATIONS: "notifications",
@@ -24,6 +24,7 @@ export const atomNameConst = {
   SUMMARY: "summary",
   LOGINDETAIL: "loginDetail",
   ATTENDANCE: "attendance",
+  CUSTOMERDETAIL: "customerDetail",
 };
 
 export const STATUS_OPTION = [

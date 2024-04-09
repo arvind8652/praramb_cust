@@ -20,11 +20,11 @@ const CustDataTable = (props) => {
     <BootstrapTable
       bootstrap4
       keyField="id"
-      data={data()}
-      columns={columns()}
+      data={data() || []}
+      columns={columns() || []}
       pagination={paginationFactory(options)}
       //   pagination={paginationFactory()}
-      //   wrapperClasses="custom-table"
+      wrapperClasses="custom-table"
       classes="table table-hover"
     />
   );

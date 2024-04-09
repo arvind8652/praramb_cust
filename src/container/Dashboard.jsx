@@ -32,16 +32,16 @@ const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalFor, setModalFor] = useState("");
 
-  // useEffect(() => {
-  //   if (!getRecoilVal(atomNameConst?.LOGINDETAIL)) {
-  //     setShowModal(true);
-  //     setModalFor(LOGIN_FORM);
-  //   }
-  //   return () => {
-  //     setModalFor("");
-  //     setShowModal(false);
-  //   };
-  // }, []);
+  useEffect(() => {
+    if (!getRecoilVal(atomNameConst?.CUSTOMERDETAIL)) {
+      setShowModal(true);
+      setModalFor(LOGIN_FORM);
+    }
+    return () => {
+      setModalFor("");
+      setShowModal(false);
+    };
+  }, []);
 
   const LoadParticularComp = () => {
     switch (modalFor) {
