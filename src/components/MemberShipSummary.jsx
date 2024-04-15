@@ -14,12 +14,12 @@ const MemberShipSummary = () => {
   const [data, setData] = useState({});
   useEffect(() => {
     const getMeberShipDetail = async () => {
-      // const val = await get(
-      //   "customerDetail/summary/" +
-      //     getRecoilVal(atomNameConst.CUSTOMERDETAIL)?._id
-      // );
+      const val = await get(
+        "customerDetail/summary/" +
+          getRecoilVal(atomNameConst.CUSTOMERDETAIL)?._id
+      );
 
-      const val = await get("customers/summary");
+      // const val = await get("customers/summary");
       console.log("check dataa---------", val);
       setRecoilVal(atomNameConst.SUMMARY, val?.data?.[0]);
 
