@@ -12,20 +12,20 @@ import { atomNameConst } from "../utities/constants";
 const MemberShipSummary = () => {
   const { getRecoilVal, setRecoilVal } = useSelector();
   const [data, setData] = useState({});
+  const summary = getRecoilVal(atomNameConst?.SUMMARY);
   useEffect(() => {
+    const customerId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?._id;
     const getMeberShipDetail = async () => {
-      const val = await get(
-        "customerDetail/summary/" +
-          getRecoilVal(atomNameConst.CUSTOMERDETAIL)?._id
-      );
+      const val = await get("customerDetail/summary/" + customerId);
 
       // const val = await get("customers/summary");
       console.log("check dataa---------", val);
-      setRecoilVal(atomNameConst.SUMMARY, val?.data?.[0]);
+      setRecoilVal(atomNameConst.SUMMARY, val?.data);
 
       // setData(val?.data);
     };
-    getMeberShipDetail();
+
+    customerId && getMeberShipDetail();
   }, []);
 
   return (
@@ -42,14 +42,14 @@ const MemberShipSummary = () => {
         <div className="col">
           <CustCard
             icon={faClockRotateLeft}
-            data={"31/12/2024"}
+            data={summary?.endDateVal}
             text="Last Date"
           />
         </div>
         <div className="col">
           <CustCard
             icon={faClipboardUser}
-            data={"31 / 365"}
+            data={summary?.attendanceVal}
             text="Attendance"
           />
         </div>

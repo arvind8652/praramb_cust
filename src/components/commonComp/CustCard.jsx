@@ -8,7 +8,7 @@ const CustCard = (props) => {
       <div className="card-body">
         <h5 className="card-title d-flex justify-content-around">
           {icon && <FontAwesomeIcon icon={icon} size="3x" {...props} />}
-          {data && <h4>{data}</h4>}
+          {data && <h3>{data}</h3>}
         </h5>
         <h5 className="card-text">{text}</h5>
       </div>

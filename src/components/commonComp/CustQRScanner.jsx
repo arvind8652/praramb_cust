@@ -6,6 +6,7 @@ const CustQRScanner = (props) => {
     handleScannedResult = () => {},
     errorResp = null,
     modalClosed = true,
+    setErrorResp = () => {},
   } = props;
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -21,6 +22,9 @@ const CustQRScanner = (props) => {
       setCameraList(cameras);
       if (cameras.length > 0) {
         setSelectedCamera(cameras[0].deviceId);
+        setErrorResp(null);
+      } else {
+        setErrorResp("We are unable to detect a camera");
       }
     });
   }, []);
@@ -136,7 +140,11 @@ const CustQRScanner = (props) => {
       <div className="d-flex justify-content-center">
         {/* {scanned && <p>Scanned Result: {scanned}</p>} */}
         {!isScanning ? (
-          <button className="btn btn-primary btn-sm" onClick={startScanning}>
+          <button
+            className="btn btn-primary btn-sm"
+            disabled={selectedCamera === null}
+            onClick={startScanning}
+          >
             Start Scan
           </button>
         ) : (

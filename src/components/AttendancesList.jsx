@@ -1,21 +1,12 @@
-import { faPerson, faPersonDress } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { Pagination, Table } from "react-bootstrap";
 import { get } from "../utities/apiServices";
-import {
-  CUSTOMER_DELETE,
-  CUSTOMER_EDIT,
-  CUSTOMER_VIEW,
-  atomNameConst,
-} from "../utities/constants";
+import { CUSTOMER_VIEW, atomNameConst } from "../utities/constants";
 import useSelector from "../store/selector";
-import CustOverLay from "./commonComp/CustOverlay";
 import { getDate, getDay, getTime } from "../utities/commonFun";
 import Attendance from "./forms/Attendance";
 import CustDataTable from "./commonComp/CustDataTable";
 
-const CustomersList = (props) => {
+const AttendancesList = (props) => {
   const [attendanceModalShow, setAttendanceModalShow] = useState(false);
   const { setModalFor, setShowModal } = props;
   const { getRecoilVal, setRecoilVal } = useSelector();
@@ -25,36 +16,8 @@ const CustomersList = (props) => {
       const val = await get(`attendance/${custId}`);
       setRecoilVal(atomNameConst.ATTENDANCE, val?.data);
     };
-    getCustomersList();
+    custId && getCustomersList();
   }, [attendanceModalShow]);
-
-  const handleClick = (clickEvent, data) => {
-    switch (clickEvent) {
-      case "view":
-        {
-          setModalFor(CUSTOMER_VIEW);
-          setShowModal(true);
-          setRecoilVal(atomNameConst.CUSTOMERSINGLEDATA, data);
-        }
-        break;
-        // case "edit":
-        //   {
-        //     setModalFor(CUSTOMER_EDIT);
-        //     setShowModal(true);
-        //     setRecoilVal(atomNameConst.CUSTOMERSINGLEDATA, data);
-        //   }
-        //   break;
-        // case "delete":
-        //   {
-        //     setModalFor(CUSTOMER_DELETE);
-        //     setShowModal(true);
-        //     setRecoilVal(atomNameConst.CUSTOMERSINGLEDATA, data);
-        //   }
-        break;
-      default:
-        break;
-    }
-  };
 
   const columns = () => {
     return [
@@ -109,4 +72,4 @@ const CustomersList = (props) => {
   );
 };
 
-export default CustomersList;
+export default AttendancesList;

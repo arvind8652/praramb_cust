@@ -1,25 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import CustOverLay from "./commonComp/CustOverlay";
 import { get } from "../utities/apiServices";
 import useSelector from "../store/selector";
-import {
-  NOTIFICATION_DELETE,
-  NOTIFICATION_EDIT,
-  NOTIFICATION_VIEW,
-  atomNameConst,
-} from "../utities/constants";
+import { NOTIFICATION_VIEW, atomNameConst } from "../utities/constants";
 
 const NotificatonsList = (props) => {
   const { setModalFor, setShowModal } = props;
   const { getRecoilVal, setRecoilVal } = useSelector();
   // const [data, setData] = useState([]);
   useEffect(() => {
+    let customerId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?._id;
     const getNotificationsList = async () => {
       const val = await get("notifications");
       setRecoilVal(atomNameConst.NOTIFICATIONS, val?.data);
       // setData(val?.data);
     };
-    getNotificationsList();
+    customerId && getNotificationsList();
   }, []);
 
   const handleClick = (clickEvent, data) => {
@@ -31,20 +27,6 @@ const NotificatonsList = (props) => {
           setRecoilVal(atomNameConst.NOTIFICATIONSINGLEDATA, data);
         }
         break;
-        // case "edit":
-        //   {
-        //     setModalFor(NOTIFICATION_EDIT);
-        //     setShowModal(true);
-        //     setRecoilVal(atomNameConst.NOTIFICATIONSINGLEDATA, data);
-        //   }
-        //   break;
-        // case "delete":
-        //   {
-        //     setModalFor(NOTIFICATION_DELETE);
-        //     setShowModal(true);
-        //     setRecoilVal(atomNameConst.NOTIFICATIONSINGLEDATA, data);
-        //   }
-        break;
       default:
         break;
     }
@@ -53,9 +35,6 @@ const NotificatonsList = (props) => {
     <div className="card  shadow p-3 mb-5 bg-white rounded">
       <div className="card-header d-flex justify-content-between">
         <h4 className="my-auto">Notification</h4>
-        {/*<button className="btn btn-primary btn-sm" onClick={props.onClick}>
-          Add
-  </button>*/}
       </div>
       <ul className="list-group list-group-flush">
         {getRecoilVal(atomNameConst.NOTIFICATIONS)?.map((val) => {

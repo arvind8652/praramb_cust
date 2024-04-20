@@ -61,6 +61,7 @@ const Attendance = (props) => {
           modalClosed={show}
           handleScannedResult={handleScannedResult}
           errorResp={errorResp}
+          setErrorResp={setErrorResp}
         />
       </Modal.Body>
     </Modal>
