@@ -9,7 +9,7 @@ const NotificatonsList = (props) => {
   const { getRecoilVal, setRecoilVal } = useSelector();
   // const [data, setData] = useState([]);
   useEffect(() => {
-    let customerId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?._id;
+    let customerId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user?._id;
     const getNotificationsList = async () => {
       const val = await get("notifications");
       setRecoilVal(atomNameConst.NOTIFICATIONS, val?.data);

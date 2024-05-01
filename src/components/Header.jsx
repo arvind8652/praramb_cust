@@ -10,7 +10,8 @@ import { BRANDNAME, LOGIN_FORM, atomNameConst } from "../utities/constants";
 function Header(props) {
   const { setModalFor, setShowModal } = props;
   const { getRecoilVal, setRecoilVal } = useSelector();
-  const loginData = getRecoilVal(atomNameConst.CUSTOMERDETAIL);
+  const loginData = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user;
+  const brandDetail = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.brandDetail;
 
   const handleLogout = () => {
     try {
@@ -30,7 +31,7 @@ function Header(props) {
           className="bg-body-tertiary mb-3 sticky-top "
         >
           <Container fluid>
-            <Navbar.Brand href="#">{BRANDNAME}</Navbar.Brand>
+            <Navbar.Brand href="#">{brandDetail?.name}</Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
@@ -39,7 +40,7 @@ function Header(props) {
             >
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                  {BRANDNAME}
+                  {brandDetail?.name}
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>

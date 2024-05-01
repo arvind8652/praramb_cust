@@ -11,7 +11,7 @@ const AttendancesList = (props) => {
   const { setModalFor, setShowModal } = props;
   const { getRecoilVal, setRecoilVal } = useSelector();
   useEffect(() => {
-    const custId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?._id;
+    const custId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user?._id;
     const getCustomersList = async () => {
       const val = await get(`attendance/${custId}`);
       setRecoilVal(atomNameConst.ATTENDANCE, val?.data);

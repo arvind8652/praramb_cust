@@ -14,7 +14,7 @@ const MemberShipSummary = () => {
   const [data, setData] = useState({});
   const summary = getRecoilVal(atomNameConst?.SUMMARY);
   useEffect(() => {
-    const customerId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?._id;
+    const customerId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user?._id;
     const getMeberShipDetail = async () => {
       const val = await get("customerDetail/summary/" + customerId);
 
@@ -28,6 +28,24 @@ const MemberShipSummary = () => {
     customerId && getMeberShipDetail();
   }, []);
 
+  let iconColor = "#63E6BE";
+  const currentStatus = () => {
+    const maxCapacity = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.brandDetail
+      ?.maxCapacity;
+    console.log("check the max---", maxCapacity);
+    const percentage = (summary?.totalActiveCustomer / maxCapacity) * 100;
+    console.log("check per--------", percentage);
+    if (percentage > 75) {
+      iconColor = "red";
+      return "Dense Crowd";
+    } else if (percentage > 50) {
+      iconColor = "orange";
+      return "Moderate Crowd";
+    } else {
+      return "Sparse Crowd";
+    }
+  };
+
   return (
     <>
       <div className="row text-center">
@@ -35,8 +53,8 @@ const MemberShipSummary = () => {
           <CustCard
             icon={faPerson}
             text="Current Status"
-            data={"Medium"}
-            style={{ color: "#63E6BE" }}
+            data={currentStatus()}
+            style={{ color: iconColor }}
           />
         </div>
         <div className="col">

@@ -18,7 +18,7 @@ const Attendance = (props) => {
   const attendanceApi = async (data) => {
     setErrorResp(null);
     const reqData = {
-      custId: getRecoilVal(atomNameConst.CUSTOMERDETAIL)?._id,
+      custId: getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user?._id,
       deviceData: data,
     };
     try {
