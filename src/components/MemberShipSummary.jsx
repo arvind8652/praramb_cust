@@ -29,17 +29,18 @@ const MemberShipSummary = () => {
   }, []);
 
   let iconColor = "#63E6BE";
+  let cardColor = "#A5D6A7";
   const currentStatus = () => {
     const maxCapacity = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.brandDetail
       ?.maxCapacity;
-    console.log("check the max---", maxCapacity);
     const percentage = (summary?.totalActiveCustomer / maxCapacity) * 100;
-    console.log("check per--------", percentage);
     if (percentage > 75) {
       iconColor = "red";
+      cardColor = "#F1BBBA";
       return "Dense Crowd";
     } else if (percentage > 50) {
       iconColor = "orange";
+      cardColor = "#FFCC80";
       return "Moderate Crowd";
     } else {
       return "Sparse Crowd";
@@ -55,6 +56,7 @@ const MemberShipSummary = () => {
             text="Current Status"
             data={currentStatus()}
             style={{ color: iconColor }}
+            cardColor={cardColor}
           />
         </div>
         <div className="col">
