@@ -4,11 +4,12 @@ import AttendancesList from "../components/AttendancesList";
 import CustModal from "../components/commonComp/CustModal";
 import {
   ATTENDANCE,
+  CHAT,
   LOGIN_FORM,
   NOTIFICATION_VIEW,
   atomNameConst,
 } from "../utities/constants";
-import NotificationForm from "../components/forms/NotificationForm";
+import Chat from "../components/forms/Chat";
 import MemberShipSummary from "../components/MemberShipSummary";
 import NotificationView from "../components/forms/NotificationView";
 import useSelector from "../store/selector";
@@ -46,8 +47,11 @@ const Dashboard = () => {
         );
       case ATTENDANCE:
         return <Attendance setShowModal={setShowModal} />;
+
+      case CHAT:
+        return <Chat setShowModal={setShowModal} />;
       default:
-        return <NotificationForm setShowModal={setShowModal} />;
+        return <div>We are facing some issue</div>;
     }
   };
 
@@ -59,6 +63,8 @@ const Dashboard = () => {
         return "Notification View";
       case ATTENDANCE:
         return "Attendance";
+      case CHAT:
+        return "Message to Admin";
       default:
         break;
     }
@@ -86,6 +92,10 @@ const Dashboard = () => {
               setModalFor={setModalFor}
               onHide={() => {
                 setShowModal(false);
+              }}
+              onClick={() => {
+                setShowModal(true);
+                setModalFor(CHAT);
               }}
             />
           </div>

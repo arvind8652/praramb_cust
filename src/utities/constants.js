@@ -10,6 +10,7 @@ export const NOTIFICATION_EDIT = "notification_Edit";
 export const NOTIFICATION_DELETE = "notification_Delete";
 export const LOGIN_FORM = "login_Form";
 export const ATTENDANCE = "attendance";
+export const CHAT = "chat";
 
 // export const BASEURL = "http://localhost:5001/"; //it is used for mockoon api
 export const BASEURL = "http://localhost:5000/"; // it is used for mongodb database
@@ -25,6 +26,7 @@ export const atomNameConst = {
   LOGINDETAIL: "loginDetail",
   ATTENDANCE: "attendance",
   CUSTOMERDETAIL: "customerDetail",
+  CHAT: "chat",
 };
 
 export const STATUS_OPTION = [

@@ -5,7 +5,7 @@ const CustInputField = (props) => {
   const { label, placeholder, type, name, error } = props;
   return (
     <Form.Group className="card p-2 shadow-sm bg-white rounded">
-      <Form.Label>{label}</Form.Label>
+      {label && <Form.Label>{label}</Form.Label>}
       <Form.Control
         className="bg-light"
         type={type}

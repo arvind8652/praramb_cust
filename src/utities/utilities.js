@@ -30,18 +30,14 @@ export const customerFormSchema = yup.object().shape({
 });
 // -------------------------end for customer detail-----------------------
 
-// ------------------------start for notification detail----------------------
-export const notificationFormInitialData = {
-  title: "",
-  type: "",
-  description: "",
+// ------------------------start for chat detail----------------------
+export const chatInitialData = {
+  chat: "",
 };
-export const notificationFormSchema = yup.object().shape({
-  title: yup.string().required("Title is required"),
-  type: yup.string().required(),
-  description: yup.string().required(),
+export const chatSchema = yup.object().shape({
+  chat: yup.string().required("Message is required"),
 });
-// ------------------------end for notification detail----------------------
+// ------------------------end for chat detail----------------------
 
 // ------------------------start for login detail----------------------
 export const loginFormInitialData = {
