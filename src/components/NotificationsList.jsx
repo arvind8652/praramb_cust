@@ -35,6 +35,9 @@ const NotificatonsList = (props) => {
     <div className="card  shadow p-3 mb-5 bg-white rounded">
       <div className="card-header d-flex justify-content-between">
         <h4 className="my-auto">Notification</h4>
+        <button className="btn btn-primary btn-sm" onClick={props.onClick}>
+          Chat With Admin
+        </button>
       </div>
       <ul className="list-group list-group-flush">
         {getRecoilVal(atomNameConst.NOTIFICATIONS)?.map((val) => {
