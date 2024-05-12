@@ -8,6 +8,13 @@ const NotificatonsList = (props) => {
   const { setModalFor, setShowModal } = props;
   const { getRecoilVal, setRecoilVal } = useSelector();
   // const [data, setData] = useState([]);
+
+  const getMessages = async (customerId) => {
+    try {
+      const resp = await get(`chat/getMessages/${customerId}`);
+      setRecoilVal(atomNameConst?.CHAT, resp?.data);
+    } catch (error) {}
+  };
   useEffect(() => {
     let customerId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user?._id;
     const getNotificationsList = async () => {
@@ -15,7 +22,9 @@ const NotificatonsList = (props) => {
       setRecoilVal(atomNameConst.NOTIFICATIONS, val?.data);
       // setData(val?.data);
     };
+
     customerId && getNotificationsList();
+    customerId && getMessages(customerId);
   }, []);
 
   const handleClick = (clickEvent, data) => {

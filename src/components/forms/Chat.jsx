@@ -10,6 +10,7 @@ import useSelector from "../../store/selector";
 import { atomNameConst } from "../../utities/constants";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getTime } from "../../utities/commonFun";
 
 const Chat = (props) => {
   const { setShowModal, formType } = props;
@@ -18,25 +19,13 @@ const Chat = (props) => {
   const customerDetail = getRecoilVal(atomNameConst.CUSTOMERDETAIL);
   const messageDetail = getRecoilVal(atomNameConst.CHAT);
 
-  const getMessages = async () => {
-    try {
-      const resp = await get(`chat/getMessages/${customerDetail?.user?._id}`);
-      console.log("check the resp--------", resp);
-      setRecoilVal(atomNameConst?.CHAT, resp?.data);
-    } catch (error) {}
-  };
-
-  useEffect(() => {
-    // getMessages();
-    console.log("we are facing issue continuos calling");
-  }, []);
-
   const handlePostApiForChat = async (data) => {
     const reqData = {
       senderId: customerDetail?.user?._id,
       receiverId: "admin",
       message: data?.chat,
     };
+    const completeMsgList = [...messageDetail];
     try {
       const resp = await post("chat/add", reqData);
       // const resp =
@@ -46,7 +35,9 @@ const Chat = (props) => {
       //         data
       //       )
       //     : await post("notifications/add", data);
-      setRecoilVal(atomNameConst.CHAT, reqData);
+      completeMsgList.push(reqData);
+      setRecoilVal(atomNameConst.CHAT, completeMsgList);
+
       console.log("check data-----", reqData);
       return true;
     } catch (error) {
@@ -55,11 +46,37 @@ const Chat = (props) => {
     }
   };
 
-  const SendMessages = ({ msg }) => (
-    <div style={{ textAlign: "right" }}>{msg}</div>
+  const MessageContainer = ({ data }) => {
+    return (
+      <>
+        <p
+          style={{
+            backgroundColor: "lightgray",
+            display: "inline-block",
+            borderRadius: "4px",
+            padding: "0px 5px 0px 5px",
+          }}
+        >
+          <p style={{ marginBottom: "1px" }}>
+            {data?.message}
+            <sub style={{ marginLeft: "5px" }}>
+              {getTime(data?.createdAt, "chat")}
+            </sub>
+          </p>
+        </p>
+      </>
+    );
+  };
+
+  const SendMessages = ({ data }) => (
+    <div style={{ textAlign: "right" }}>
+      <MessageContainer data={data} />
+    </div>
   );
-  const ReceivedMessages = ({ msg }) => (
-    <div style={{ textAlign: "left", color: "grey" }}>{msg}</div>
+  const ReceivedMessages = ({ data }) => (
+    <div style={{ textAlign: "left" }}>
+      <MessageContainer data={data} />
+    </div>
   );
   return (
     <Formik
@@ -77,13 +94,14 @@ const Chat = (props) => {
           style={{ padding: "0 15px 0 15px" }}
         >
           <Row>
-            {messageDetail?.map((data) => {
-              if (data?.senderId === customerDetail?.user?._id) {
-                <ReceivedMessages msg={messageDetail?.message} />;
-              } else {
-                <SendMessages msg={messageDetail?.message} />;
-              }
-            })}
+            {messageDetail &&
+              messageDetail?.map((data) => {
+                if (data?.receiverId === "admin") {
+                  return <SendMessages data={data} />;
+                } else {
+                  return <ReceivedMessages data={data} />;
+                }
+              })}
           </Row>
           <hr />
           <Row>

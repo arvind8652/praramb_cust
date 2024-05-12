@@ -30,9 +30,14 @@ export const getDate = (timeStamp) => {
   return formattedDate;
 };
 
-export const getTime = (timeStamp) => {
+export const getTime = (timeStamp, screen = "") => {
   const date = new Date(timeStamp);
-  if (!timeStamp) return "waiting";
+  if (!timeStamp) {
+    if (screen === "chat") {
+      return "now";
+    }
+    return "waiting";
+  }
   // Get the hours, minutes, and seconds
   const hours = date.getHours();
   const minutes = date.getMinutes();
