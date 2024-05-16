@@ -102,6 +102,11 @@ const Chat = (props) => {
                   return <ReceivedMessages data={data} />;
                 }
               })}
+            {messageDetail?.length < 1 && (
+              <p style={{ color: "gray", textAlign: "center" }}>
+                Start new conversation
+              </p>
+            )}
           </Row>
           <hr />
           <Row>
