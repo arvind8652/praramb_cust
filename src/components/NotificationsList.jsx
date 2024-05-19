@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CustOverLay from "./commonComp/CustOverlay";
 import { get } from "../utities/apiServices";
 import useSelector from "../store/selector";
@@ -9,9 +9,13 @@ const NotificatonsList = (props) => {
   const { getRecoilVal, setRecoilVal } = useSelector();
   // const [data, setData] = useState([]);
 
+  const [newMsgCount, setNewMsgCount] = useState(0);
+
   const getMessages = async (customerId) => {
     try {
       const resp = await get(`chat/getMessages/${customerId}`);
+      setNewMsgCount(resp.data.filter((val) => !val?.messageRead)?.length);
+      console.log("check the value=========", newMsgCount);
       setRecoilVal(atomNameConst?.CHAT, resp?.data);
     } catch (error) {}
   };
@@ -42,11 +46,27 @@ const NotificatonsList = (props) => {
   };
   return (
     <div className="card  shadow p-3 mb-5 bg-white rounded">
-      <div className="card-header d-flex justify-content-between">
+      <div
+        style={{ position: "relative" }}
+        className="card-header d-flex justify-content-between"
+      >
         <h4 className="my-auto">Notification</h4>
         <button className="btn btn-primary btn-sm" onClick={props.onClick}>
           Message to Admin
         </button>
+        <p
+          style={{
+            position: "absolute",
+            right: "10px",
+            padding: "0 4px 0 4px",
+            top: "-5px",
+            background: "lightGreen",
+            borderRadius: "10px",
+            display: newMsgCount < 1 && "none",
+          }}
+        >
+          {newMsgCount}
+        </p>
       </div>
       <ul className="list-group list-group-flush">
         {getRecoilVal(atomNameConst.NOTIFICATIONS)?.map((val) => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import CustInputField from "../commonComp/CustInputField";
@@ -18,6 +18,38 @@ const Chat = (props) => {
   const { setRecoilVal, getRecoilVal } = useSelector();
   const customerDetail = getRecoilVal(atomNameConst.CUSTOMERDETAIL);
   const messageDetail = getRecoilVal(atomNameConst.CHAT);
+
+  const divRef = useRef(null);
+  useEffect(() => {
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = divRef.current;
+      if (Math.round(scrollTop) + clientHeight >= scrollHeight) {
+        alert("reached the end of the div");
+        handleUpdateChat();
+      } else {
+        console.log("waiting.........");
+      }
+    };
+
+    const divElement = divRef.current;
+    divElement.addEventListener("scroll", handleScroll);
+    if (divRef.current?.scrollHeight === divRef.current?.clientHeight) {
+      handleUpdateChat();
+    }
+
+    return () => {
+      divElement.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleUpdateChat = async () => {
+    try {
+      const resp = await get(`chat/messageReaded/${customerDetail?.user?._id}`);
+      console.log("check response----------", resp);
+    } catch (error) {
+      console.log("check we are facing issue--------", error);
+    }
+  };
 
   const handlePostApiForChat = async (data) => {
     const reqData = {
@@ -93,7 +125,14 @@ const Chat = (props) => {
           onSubmit={handleSubmit}
           style={{ padding: "0 15px 0 15px" }}
         >
-          <Row>
+          <Row
+            ref={divRef}
+            style={{
+              maxHeight: "400px",
+              overflowY: "auto",
+              scrollbarWidth: "thin",
+            }}
+          >
             {messageDetail &&
               messageDetail?.map((data) => {
                 if (data?.receiverId === "admin") {
