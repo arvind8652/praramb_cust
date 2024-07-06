@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import NotificationsList from "../components/NotificationsList";
 import AttendancesList from "../components/AttendancesList";
 import CustModal from "../components/commonComp/CustModal";
@@ -16,16 +16,41 @@ import useSelector from "../store/selector";
 import LoginForm from "../components/forms/LoginForm";
 import Header from "../components/Header";
 import Attendance from "../components/forms/Attendance";
+import { get } from "../utities/apiServices";
 
 const Dashboard = () => {
+  console.log("cehck function call on dashboard");
   const { setRecoilVal, getRecoilVal } = useSelector();
   const [showModal, setShowModal] = useState(false);
   const [modalFor, setModalFor] = useState("");
+  let apicallCount = 0;
+
+  const getAllData = async () => {
+    apicallCount = 1;
+    let customerId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user?._id;
+    (async () => {
+      const val = await get("notifications");
+      setRecoilVal(atomNameConst.NOTIFICATIONS, val?.data);
+    })();
+    (async () => {
+      const val = await get(`attendance/${customerId}`);
+      setRecoilVal(atomNameConst.ATTENDANCE, val?.data);
+    })();
+    (async () => {
+      const val = await get("customerDetail/summary/" + customerId);
+      console.log("check dataa---------", val);
+      setRecoilVal(atomNameConst.SUMMARY, val?.data);
+    })();
+  };
 
   useEffect(() => {
+    console.log("check the databashboard");
     if (!getRecoilVal(atomNameConst?.CUSTOMERDETAIL)) {
       setShowModal(true);
       setModalFor(LOGIN_FORM);
+    } else {
+      console.log("ceh k the dalmckl-------");
+      apicallCount === 0 && getAllData();
     }
     return () => {
       setModalFor("");

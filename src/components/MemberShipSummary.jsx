@@ -13,20 +13,20 @@ const MemberShipSummary = () => {
   const { getRecoilVal, setRecoilVal } = useSelector();
   const [data, setData] = useState({});
   const summary = getRecoilVal(atomNameConst?.SUMMARY);
-  useEffect(() => {
-    const customerId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user?._id;
-    const getMeberShipDetail = async () => {
-      const val = await get("customerDetail/summary/" + customerId);
+  // useEffect(() => {
+  //   const customerId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user?._id;
+  //   const getMeberShipDetail = async () => {
+  //     const val = await get("customerDetail/summary/" + customerId);
 
-      // const val = await get("customers/summary");
-      console.log("check dataa---------", val);
-      setRecoilVal(atomNameConst.SUMMARY, val?.data);
+  //     // const val = await get("customers/summary");
+  //     console.log("check dataa---------", val);
+  //     setRecoilVal(atomNameConst.SUMMARY, val?.data);
 
-      // setData(val?.data);
-    };
+  //     // setData(val?.data);
+  //   };
 
-    customerId && getMeberShipDetail();
-  }, []);
+  //   customerId && getMeberShipDetail();
+  // }, []);
 
   let iconColor = "#63E6BE";
   let cardColor = "#A5D6A7";

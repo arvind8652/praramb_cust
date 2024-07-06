@@ -10,14 +10,14 @@ const AttendancesList = (props) => {
   const [attendanceModalShow, setAttendanceModalShow] = useState(false);
   const { setModalFor, setShowModal } = props;
   const { getRecoilVal, setRecoilVal } = useSelector();
-  useEffect(() => {
-    const custId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user?._id;
-    const getCustomersList = async () => {
-      const val = await get(`attendance/${custId}`);
-      setRecoilVal(atomNameConst.ATTENDANCE, val?.data);
-    };
-    custId && getCustomersList();
-  }, [attendanceModalShow]);
+  // useEffect(() => {
+  //   const custId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user?._id;
+  //   const getCustomersList = async () => {
+  //     const val = await get(`attendance/${custId}`);
+  //     setRecoilVal(atomNameConst.ATTENDANCE, val?.data);
+  //   };
+  //   custId && !attendanceModalShow && getCustomersList();
+  // }, [attendanceModalShow]);
 
   const columns = () => {
     return [

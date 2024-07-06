@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import { post } from "../../utities/apiServices";
+import { get, post } from "../../utities/apiServices";
 import CustQRScanner from "../commonComp/CustQRScanner";
 import useSelector from "../../store/selector";
 import { atomNameConst } from "../../utities/constants";
@@ -23,10 +23,15 @@ const Attendance = (props) => {
     };
     try {
       const res = await post(`attendance/add`, reqData);
-      onHide();
+      (async () => {
+        const custId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user?._id;
+        const val = await get(`attendance/${custId}`);
+        setRecoilVal(atomNameConst.ATTENDANCE, val?.data);
+      })();
       if (res.status === 200) {
         const result = res.json();
       }
+      onHide();
     } catch (error) {
       if (typeof error === "object") {
         let errorMsg = await error.json();

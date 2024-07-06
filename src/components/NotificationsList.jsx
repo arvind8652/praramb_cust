@@ -11,25 +11,29 @@ const NotificatonsList = (props) => {
 
   const [newMsgCount, setNewMsgCount] = useState(0);
 
-  const getMessages = async (customerId) => {
+  const getMessages = async () => {
+    let customerId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user?._id;
     try {
       const resp = await get(`chat/getMessages/${customerId}`);
       setNewMsgCount(resp.data.filter((val) => !val?.messageRead)?.length);
       console.log("check the value=========", newMsgCount);
       setRecoilVal(atomNameConst?.CHAT, resp?.data);
+      props.onClick();
     } catch (error) {}
   };
-  useEffect(() => {
-    let customerId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user?._id;
-    const getNotificationsList = async () => {
-      const val = await get("notifications");
-      setRecoilVal(atomNameConst.NOTIFICATIONS, val?.data);
-      // setData(val?.data);
-    };
 
-    customerId && getNotificationsList();
-    customerId && getMessages(customerId);
-  }, []);
+  // useEffect(() => {
+  //   console.log("check the data");
+  //   let customerId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user?._id;
+  //   // const getNotificationsList = async () => {
+  //   //   const val = await get("notifications");
+  //   //   setRecoilVal(atomNameConst.NOTIFICATIONS, val?.data);
+  //   //   // setData(val?.data);
+  //   // };
+
+  //   // customerId && getNotificationsList();
+  //   customerId && getMessages(customerId);
+  // }, []);
 
   const handleClick = (clickEvent, data) => {
     switch (clickEvent) {
@@ -51,7 +55,11 @@ const NotificatonsList = (props) => {
         className="card-header d-flex justify-content-between"
       >
         <h4 className="my-auto">Notification</h4>
-        <button className="btn btn-primary btn-sm" onClick={props.onClick}>
+        <button
+          className="btn btn-primary btn-sm"
+          // onClick={{ getMessages, ...props.onClick }}
+          onClick={getMessages}
+        >
           Message to Admin
         </button>
         <p
