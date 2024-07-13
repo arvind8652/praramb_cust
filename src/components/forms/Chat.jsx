@@ -21,6 +21,7 @@ const Chat = (props) => {
 
   const divRef = useRef(null);
   useEffect(() => {
+    divRef.current.scrollTop = divRef.current?.scrollHeight;
     const handleScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = divRef.current;
       if (Math.round(scrollTop) + clientHeight >= scrollHeight) {
@@ -69,7 +70,7 @@ const Chat = (props) => {
       //     : await post("notifications/add", data);
       completeMsgList.push(reqData);
       setRecoilVal(atomNameConst.CHAT, completeMsgList);
-
+      divRef.current.scrollTop = divRef.current?.scrollHeight;
       console.log("check data-----", reqData);
       return true;
     } catch (error) {
