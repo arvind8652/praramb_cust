@@ -55,7 +55,7 @@ const MemberShipSummary = () => {
             icon={faPerson}
             text="Current Status"
             data={currentStatus()}
-            style={{ color: iconColor }}
+            // style={{ color: iconColor }}
             cardColor={cardColor}
           />
         </div>

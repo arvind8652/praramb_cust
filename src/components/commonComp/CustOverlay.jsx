@@ -28,7 +28,7 @@ const CustOverLay = (props) => {
         onClick={() => setShow(!show)}
         style={{ cursor: "pointer" }}
       />
-      <Overlay target={target.current} show={show} placement="left">
+      <Overlay target={target.current} rootClose show={show} placement="left">
         {({
           placement: _placement,
           arrowProps: _arrowProps,

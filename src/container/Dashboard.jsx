@@ -25,6 +25,10 @@ const Dashboard = () => {
   const [modalFor, setModalFor] = useState("");
   let apicallCount = 0;
 
+  const handleSetNotification = () => {
+    alert("sdsd");
+  };
+
   const getAllData = async () => {
     apicallCount = 1;
     let customerId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user?._id;
@@ -97,6 +101,7 @@ const Dashboard = () => {
 
   return (
     <>
+      <button onClick={handleSetNotification}>onCLickk</button>
       <Header setShowModal={setShowModal} setModalFor={setModalFor} />
       <div className="container  p-3">
         <MemberShipSummary />
