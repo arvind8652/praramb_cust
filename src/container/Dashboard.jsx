@@ -26,7 +26,11 @@ const Dashboard = () => {
   let apicallCount = 0;
 
   const handleSetNotification = () => {
-    alert("sdsd");
+    Notification.requestPermission().then((perm) => {
+      if (perm === "granted") {
+        new Notification("testing notification");
+      }
+    });
   };
 
   const getAllData = async () => {
