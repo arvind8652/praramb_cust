@@ -33,6 +33,14 @@ const Dashboard = () => {
     });
   };
 
+  const sendNotification = () => {
+    if (navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage("showNotification");
+    } else {
+      console.log("No active service worker controller found.");
+    }
+  };
+
   const getAllData = async () => {
     apicallCount = 1;
     let customerId = getRecoilVal(atomNameConst.CUSTOMERDETAIL)?.user?._id;
@@ -106,6 +114,7 @@ const Dashboard = () => {
   return (
     <>
       <button onClick={handleSetNotification}>onCLickk</button>
+      {/* <button onClick={sendNotification}>onCLickk</button> */}
       <Header setShowModal={setShowModal} setModalFor={setModalFor} />
       <div className="container  p-3">
         <MemberShipSummary />

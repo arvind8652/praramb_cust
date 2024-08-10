@@ -77,3 +77,26 @@ self.addEventListener("message", (event) => {
 });
 
 // Any other custom service worker logic can go here.
+// self.addEventListener("push", function (event) {
+//   const options = {
+//     body: "This is a notification body.",
+//     // icon: "icon.png",
+//     // badge: "badge.png",
+//   };
+
+//   event.waitUntil(
+//     self.registration.showNotification("Notification Title", options)
+//   );
+// });
+
+self.addEventListener("message", function (event) {
+  if (event.data === "showNotification") {
+    const options = {
+      body: "This is a notification body.",
+      // icon: "icon.png",
+      // badge: "badge.png",
+    };
+
+    self.registration.showNotification("Notification Title", options);
+  }
+});
